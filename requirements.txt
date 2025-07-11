@@ -9,9 +9,9 @@ scikit-learn>=1.0.0
 pandas>=1.3.0
 numpy>=1.21.0
 
-# Optional LLM dependencies (for future LLM engine)
-# openai>=1.0.0  # Uncomment when implementing LLM features
-# langchain>=0.1.0  # Uncomment when implementing LLM features
+# Optional LLM dependencies (for LLM engine)
+openai>=1.0.0
+langchain>=0.1.0
 
 # Development dependencies
 pytest>=6.0.0

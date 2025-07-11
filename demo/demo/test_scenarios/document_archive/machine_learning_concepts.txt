@@ -1,0 +1,77 @@
+Machine Learning Concepts Study Guide
+
+Supervised Learning:
+1. Classification
+   - Predicts categories/classes
+   - Examples: email spam detection, image recognition
+   - Algorithms: Logistic Regression, Random Forest, SVM, Neural Networks
+   - Evaluation: Accuracy, Precision, Recall, F1-score
+
+2. Regression
+   - Predicts continuous values
+   - Examples: house prices, stock prices
+   - Algorithms: Linear Regression, Polynomial Regression, Random Forest
+   - Evaluation: MSE, MAE, R-squared
+
+Unsupervised Learning:
+1. Clustering
+   - Groups similar data points
+   - Examples: customer segmentation, gene sequencing
+   - Algorithms: K-Means, DBSCAN, Hierarchical Clustering
+   - Evaluation: Silhouette score, Elbow method
+
+2. Dimensionality Reduction
+   - Reduces feature space while preserving information
+   - Examples: visualization, compression
+   - Algorithms: PCA, t-SNE, UMAP
+
+Data Preprocessing:
+- Feature scaling: StandardScaler, MinMaxScaler
+- Handling missing values: imputation, removal
+- Encoding categorical variables: one-hot, label encoding
+- Feature selection: correlation analysis, feature importance
+
+Model Evaluation:
+- Train/Validation/Test split
+- Cross-validation
+- Bias-variance tradeoff
+- Overfitting vs. underfitting
+- Learning curves
+
+Key Algorithms:
+1. Linear Regression
+   - Simple, interpretable
+   - Assumes linear relationship
+   - Good baseline model
+
+2. Random Forest
+   - Ensemble of decision trees
+   - Handles non-linear relationships
+   - Built-in feature importance
+
+3. Neural Networks
+   - Deep learning for complex patterns
+   - Requires large datasets
+   - Black box but powerful
+
+Python Libraries:
+- scikit-learn: General ML algorithms
+- TensorFlow/PyTorch: Deep learning
+- XGBoost: Gradient boosting
+- pandas: Data manipulation
+- matplotlib/seaborn: Visualization
+
+Project Workflow:
+1. Define problem and success metrics
+2. Collect and explore data
+3. Clean and preprocess data
+4. Feature engineering
+5. Model selection and training
+6. Evaluation and validation
+7. Deployment and monitoring
+
+Next Steps:
+- Complete Andrew Ng's ML course
+- Work on Kaggle competitions
+- Build end-to-end ML project
+- Learn about MLOps and deployment

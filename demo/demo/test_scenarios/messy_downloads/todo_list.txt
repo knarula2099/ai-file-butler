@@ -1,0 +1,27 @@
+TODO List - March 2024
+
+Work:
+- [ ] Finish quarterly report
+- [x] Update project documentation
+- [ ] Schedule team meeting
+- [ ] Review code submissions
+- [x] Attend client presentation
+
+Personal:
+- [ ] Book vacation flights
+- [x] Renew car insurance
+- [ ] Call dentist for appointment
+- [ ] Organize home office
+- [ ] Start reading new book
+
+Shopping:
+- [x] Groceries for the week
+- [ ] New laptop charger
+- [ ] Birthday gift for mom
+- [ ] Running shoes
+
+Weekend:
+- [ ] Clean garage
+- [ ] Plant spring garden
+- [ ] Visit museum exhibition
+- [x] Family dinner on Sunday
