@@ -24,6 +24,7 @@ class LLMConfig:
     batch_size: int = 5  # Files to analyze together
     enable_caching: bool = True
     cost_limit_usd: float = 10.0  # Safety limit
+    custom_prompt: Optional[str] = None  # Custom organization prompt
 
 class LLMOrganizationEngine:
     """LLM-powered intelligent file organization"""
@@ -228,7 +229,26 @@ class LLMOrganizationEngine:
         if len(content) > max_chars:
             content = content[:max_chars] + "... [truncated]"
         
-        prompt = f"""Analyze this file and provide a structured response in JSON format.
+        # Use custom prompt if provided, otherwise use default
+        if self.config.custom_prompt:
+            base_prompt = f"""Analyze this file according to the following custom organization criteria:
+
+{self.config.custom_prompt}
+
+File: {filename}
+Content: {content}
+
+Please respond with a JSON object containing:
+- "summary": Brief 1-2 sentence description of the file's content and purpose
+- "category": Main category based on the custom criteria above
+- "topics": List of 2-3 key topics or keywords
+- "importance": "high", "medium", or "low" based on apparent importance
+- "suggested_folder": Suggested folder name following the custom organization criteria
+- "confidence": Float between 0-1 indicating confidence in categorization
+
+Respond with only the JSON object:"""
+        else:
+            base_prompt = f"""Analyze this file and provide a structured response in JSON format.
 
 File: {filename}
 Content: {content}
@@ -253,7 +273,7 @@ Example response:
 
 Respond with only the JSON object:"""
 
-        return prompt
+        return base_prompt
     
     def _call_llm(self, prompt: str, max_tokens: int = None) -> str:
         """Call the configured LLM with the prompt"""
@@ -400,7 +420,26 @@ Respond with only the JSON object:"""
             if len(files) > 5:
                 files_by_category += f"  ... and {len(files) - 5} more files\n"
         
-        prompt = f"""Based on these files and their analysis, create a logical folder structure for organization.
+        # Use custom prompt if provided, otherwise use default
+        if self.config.custom_prompt:
+            base_prompt = f"""Based on these files and the following custom organization criteria, create a logical folder structure:
+
+{self.config.custom_prompt}
+
+Files to organize:{files_by_category}
+
+Create a hierarchical folder structure that follows the custom criteria above and:
+1. Groups related files logically according to the custom criteria
+2. Uses clear, descriptive folder names
+3. Avoids too many nested levels (max 3 levels deep)
+
+Respond with a JSON object containing:
+- "directories": List of folder paths to create (e.g., ["Work/Projects", "Personal/Finance"])
+- "reasoning": Brief explanation of how the structure follows the custom criteria
+
+Respond with only the JSON object:"""
+        else:
+            base_prompt = f"""Based on these files and their analysis, create a logical folder structure for organization.
 
 Files to organize:{files_by_category}
 
@@ -428,7 +467,7 @@ Example:
 
 Respond with only the JSON object:"""
 
-        return prompt
+        return base_prompt
     
     def _map_files_to_folders(self, file_summaries: List[Dict[str, Any]], 
                              folder_structure: Dict[str, Any]) -> List[Dict[str, Any]]:

@@ -1,0 +1,59 @@
+{
+  "usage_records": [
+    {
+      "timestamp": 1752248769.8088803,
+      "provider": "openai",
+      "model": "gpt-3.5-turbo",
+      "prompt_tokens": 194,
+      "completion_tokens": 66,
+      "cost_usd": 0.000196,
+      "operation": "organization"
+    },
+    {
+      "timestamp": 1752248770.9347725,
+      "provider": "openai",
+      "model": "gpt-3.5-turbo",
+      "prompt_tokens": 194,
+      "completion_tokens": 65,
+      "cost_usd": 0.0001945,
+      "operation": "organization"
+    },
+    {
+      "timestamp": 1752248772.139234,
+      "provider": "openai",
+      "model": "gpt-3.5-turbo",
+      "prompt_tokens": 194,
+      "completion_tokens": 65,
+      "cost_usd": 0.0001945,
+      "operation": "organization"
+    },
+    {
+      "timestamp": 1752248773.3875318,
+      "provider": "openai",
+      "model": "gpt-3.5-turbo",
+      "prompt_tokens": 286,
+      "completion_tokens": 80,
+      "cost_usd": 0.000263,
+      "operation": "organization"
+    },
+    {
+      "timestamp": 1752248774.4771092,
+      "provider": "openai",
+      "model": "gpt-3.5-turbo",
+      "prompt_tokens": 280,
+      "completion_tokens": 57,
+      "cost_usd": 0.0002255,
+      "operation": "organization"
+    },
+    {
+      "timestamp": 1752248775.991922,
+      "provider": "openai",
+      "model": "gpt-3.5-turbo",
+      "prompt_tokens": 274,
+      "completion_tokens": 64,
+      "cost_usd": 0.00023300000000000003,
+      "operation": "organization"
+    }
+  ],
+  "last_updated": 1752248775.9921174
+}

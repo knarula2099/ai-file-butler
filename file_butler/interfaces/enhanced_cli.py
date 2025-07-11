@@ -151,7 +151,8 @@ class EnhancedFileButlerCLI:
                     model=kwargs.get('llm_model', 'gpt-3.5-turbo'),
                     max_tokens=kwargs.get('max_tokens', 500),
                     temperature=kwargs.get('temperature', 0.2),
-                    cost_limit_usd=kwargs.get('cost_limit', 10.0)
+                    cost_limit_usd=kwargs.get('cost_limit', 10.0),
+                    custom_prompt=kwargs.get('custom_prompt')
                 )
                 return LLMOrganizationEngine(config)
             except Exception as e:
@@ -299,6 +300,7 @@ def cli():
               default='openai', help='LLM provider for semantic analysis')
 @click.option('--llm-model', default='gpt-3.5-turbo', help='LLM model to use')
 @click.option('--cost-limit', type=float, default=10.0, help='Maximum cost limit for LLM usage ($)')
+@click.option('--custom-prompt', help='Custom organization prompt for LLM (e.g., "Organize by year" or "Group by location")')
 # ML-specific options
 @click.option('--clustering-algorithm', type=click.Choice(['dbscan', 'kmeans', 'hierarchical']),
               default='dbscan', help='Clustering algorithm')
@@ -306,7 +308,7 @@ def cli():
 @click.option('--eps', type=float, default=0.5, help='Epsilon parameter for DBSCAN')
 @click.option('--n-clusters', type=int, help='Number of clusters (for k-means)')
 def organize(source_path, target, strategy, execute, no_duplicates, quiet, 
-            llm_provider, llm_model, cost_limit,
+            llm_provider, llm_model, cost_limit, custom_prompt,
             clustering_algorithm, min_samples, eps, n_clusters):
     """Organize files using advanced AI strategies"""
     
@@ -320,7 +322,8 @@ def organize(source_path, target, strategy, execute, no_duplicates, quiet,
             strategy_params.update({
                 'llm_provider': llm_provider,
                 'llm_model': llm_model,
-                'cost_limit': cost_limit
+                'cost_limit': cost_limit,
+                'custom_prompt': custom_prompt
             })
         elif strategy in ['clustering', 'ml']:
             strategy_params.update({
@@ -581,6 +584,151 @@ def find_similar_images(source_path, threshold):
         click.echo("❌ Image similarity requires: pip install imagehash Pillow")
     except Exception as e:
         click.echo(f"❌ Image analysis failed: {e}")
+
+@cli.command()
+@click.argument('source_path', type=click.Path(exists=True))
+@click.option('--prompt', '-p', required=True, help='Custom organization prompt')
+@click.option('--provider', type=click.Choice(['openai', 'anthropic', 'local']), default='openai')
+@click.option('--model', default='gpt-3.5-turbo')
+@click.option('--cost-limit', type=float, default=5.0, help='Maximum cost limit ($)')
+@click.option('--execute', is_flag=True, help='Execute the plan (default is dry run)')
+@click.option('--verbose', '-v', is_flag=True, help='Verbose output')
+def organize_with_prompt(source_path, prompt, provider, model, cost_limit, execute, verbose):
+    """Organize files using a custom LLM prompt"""
+    
+    click.echo(f"🤖 Organizing files with custom prompt: {prompt}")
+    
+    try:
+        from ..engines.llm import LLMOrganizationEngine, LLMConfig
+        
+        # Check API key
+        if provider == 'openai' and not os.getenv('OPENAI_API_KEY'):
+            click.echo("❌ OPENAI_API_KEY environment variable not set")
+            click.echo("💡 Set it with: export OPENAI_API_KEY=your_key_here")
+            return
+        
+        # Setup
+        scanner = FileScanner()
+        extractor = FeatureExtractorManager()
+        
+        # Scan and extract features
+        scan_result = scanner.scan_directory(source_path)
+        files_with_features = extractor.extract_batch(scan_result.files)
+        
+        if verbose:
+            click.echo(f"📁 Found {len(files_with_features)} files to organize")
+        
+        # Initialize LLM engine with custom prompt
+        config = LLMConfig(
+            provider=provider,
+            model=model,
+            cost_limit_usd=cost_limit,
+            custom_prompt=prompt
+        )
+        engine = LLMOrganizationEngine(config)
+        
+        # Generate organization plan
+        plan = engine.organize(files_with_features)
+        plan.source_directory = source_path
+        plan.target_directory = f"{source_path}/organized"
+        
+        # Display plan
+        if verbose:
+            click.echo(f"\n📋 Generated {len(plan.actions)} actions:")
+            for action in plan.actions[:10]:  # Show first 10
+                if action.action_type.value == 'create_dir':
+                    click.echo(f"  📂 Create: {action.destination}")
+                else:
+                    click.echo(f"  📄 Move: {action.source} → {action.destination}")
+            
+            if len(plan.actions) > 10:
+                click.echo(f"  ... and {len(plan.actions) - 10} more actions")
+        
+        # Show cost information
+        total_cost = engine.cost_tracker.total_cost_usd
+        click.echo(f"\n💰 Total cost: ${total_cost:.4f}")
+        
+        # Execute if requested
+        if execute:
+            if click.confirm("Proceed with execution?"):
+                executor = ActionExecutor()
+                executor.execute_plan(plan, verbose=verbose)
+                click.echo("✅ Organization complete!")
+            else:
+                click.echo("❌ Execution cancelled")
+        else:
+            click.echo("\n💡 Run with --execute to apply changes")
+            
+    except Exception as e:
+        click.echo(f"❌ Error: {e}")
+        if verbose:
+            import traceback
+            traceback.print_exc()
+        raise click.Abort()
+
+
+@cli.command()
+def prompt_examples():
+    """Show examples of custom organization prompts"""
+    
+    click.echo("🎯 Custom Organization Prompt Examples")
+    click.echo("=" * 50)
+    
+    examples = [
+        {
+            "name": "Organize by Year",
+            "prompt": "Organize these files by the year they were created or modified. Create folders like '2024', '2023', '2022', etc.",
+            "use_case": "Photo collections, document archives"
+        },
+        {
+            "name": "Organize by Location",
+            "prompt": "Organize these files by geographic location. Extract location information from file names, metadata, or content. Create folders like 'New York', 'London', 'Tokyo', etc.",
+            "use_case": "Travel photos, location-based documents"
+        },
+        {
+            "name": "Organize by Project",
+            "prompt": "Organize these files by project name. Look for project identifiers in file names or content. Create folders for each unique project.",
+            "use_case": "Work documents, development projects"
+        },
+        {
+            "name": "Organize by Event",
+            "prompt": "Organize these files by event or occasion. Look for event names, dates, or themes in the content. Create folders like 'Wedding', 'Birthday Party', 'Conference', etc.",
+            "use_case": "Event photos, meeting notes"
+        },
+        {
+            "name": "Organize by Client",
+            "prompt": "Organize these files by client name. Extract client information from file names, email addresses, or document content. Create a folder for each client.",
+            "use_case": "Freelance work, business documents"
+        },
+        {
+            "name": "Organize by Topic",
+            "prompt": "Organize these files by academic or professional topic. Create folders for different subjects like 'Marketing', 'Finance', 'Technology', 'Health', etc.",
+            "use_case": "Research documents, educational materials"
+        },
+        {
+            "name": "Organize by Priority",
+            "prompt": "Organize these files by priority level. Create folders like 'High Priority', 'Medium Priority', 'Low Priority', 'Archive' based on importance and urgency.",
+            "use_case": "Task management, project planning"
+        },
+        {
+            "name": "Organize by File Type and Purpose",
+            "prompt": "Organize these files by their primary purpose and type. Create folders like 'Documents/Contracts', 'Images/Logos', 'Videos/Tutorials', 'Audio/Podcasts'.",
+            "use_case": "Mixed media collections"
+        }
+    ]
+    
+    for i, example in enumerate(examples, 1):
+        click.echo(f"\n{i}. {example['name']}")
+        click.echo(f"   📝 Prompt: {example['prompt']}")
+        click.echo(f"   🎯 Use case: {example['use_case']}")
+        click.echo(f"   💻 Command: file-butler organize-with-prompt /path/to/files --prompt \"{example['prompt']}\"")
+    
+    click.echo(f"\n💡 Tips for writing effective prompts:")
+    click.echo("   • Be specific about the organization criteria")
+    click.echo("   • Mention what information to extract (dates, names, locations, etc.)")
+    click.echo("   • Specify the desired folder structure")
+    click.echo("   • Include examples of expected folder names")
+
 
 @cli.command()
 @click.option('--config-file', help='Path to configuration file')

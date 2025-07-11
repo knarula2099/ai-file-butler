@@ -57,6 +57,11 @@ class Week2Demo:
             print("\n🤖 DEMO 2: LLM Semantic Analysis Deep Dive")
             print("-" * 45)
             self._demo_llm_features(test_path)
+            
+            # Demo 2.5: Custom Prompt Examples
+            print("\n🎯 DEMO 2.5: Custom Prompt Examples")
+            print("-" * 35)
+            self._demo_custom_prompts(test_path)
         
         # Demo 3: ML Clustering Analysis
         if self._check_ml_availability():
@@ -393,6 +398,88 @@ class Week2Demo:
         else:
             print("\n📄 Not enough text files for similarity analysis")
     
+    def _demo_custom_prompts(self, test_path):
+        """Demonstrate custom prompt functionality"""
+        
+        if not self._check_llm_availability():
+            print("⏭️  LLM features not available")
+            return
+        
+        # Scan and prepare files
+        scan_result = self.scanner.scan_directory(test_path)
+        # Limit files for cost control in demo
+        sample_files = self.extractor.extract_batch(scan_result.files[:6])
+        
+        print(f"🎯 Testing custom prompts on {len(sample_files)} files...")
+        
+        # Example custom prompts
+        custom_prompts = [
+            {
+                "name": "Organize by Year",
+                "prompt": "Organize these files by the year they were created or modified. Create folders like '2024', '2023', '2022', etc. Look for dates in file names, metadata, or content.",
+                "description": "Groups files by creation/modification year"
+            },
+            {
+                "name": "Organize by Location", 
+                "prompt": "Organize these files by geographic location. Extract location information from file names, metadata, or content. Create folders like 'New York', 'London', 'Tokyo', etc.",
+                "description": "Groups files by geographic location"
+            },
+            {
+                "name": "Organize by Project",
+                "prompt": "Organize these files by project name. Look for project identifiers in file names or content. Create folders for each unique project.",
+                "description": "Groups files by project name"
+            }
+        ]
+        
+        for i, prompt_info in enumerate(custom_prompts, 1):
+            print(f"\n🔬 Test {i}: {prompt_info['name']}")
+            print(f"   📝 {prompt_info['description']}")
+            
+            try:
+                # Initialize LLM engine with custom prompt
+                config = LLMConfig(
+                    provider='openai',
+                    model='gpt-3.5-turbo',
+                    cost_limit_usd=1.0,  # Low limit for demo
+                    max_file_size_kb=20,
+                    custom_prompt=prompt_info['prompt']
+                )
+                engine = LLMOrganizationEngine(config)
+                
+                # Analyze files with custom prompt
+                file_summaries = engine._analyze_file_contents(sample_files)
+                
+                # Show results
+                categories = {}
+                for summary in file_summaries:
+                    category = summary.get('category', 'Unknown')
+                    if category not in categories:
+                        categories[category] = []
+                    categories[category].append(summary)
+                
+                print(f"   🏷️  Detected categories:")
+                for category, files in categories.items():
+                    print(f"      📂 {category}: {len(files)} files")
+                
+                # Show folder structure
+                folder_structure = engine._generate_folder_structure(file_summaries)
+                print(f"   📁 Proposed folders:")
+                for directory in folder_structure.get('directories', []):
+                    print(f"      📂 {directory}")
+                
+                # Show cost
+                total_cost = engine.cost_tracker.total_cost_usd
+                print(f"   💰 Cost: ${total_cost:.4f}")
+                
+            except Exception as e:
+                print(f"   ❌ Failed: {e}")
+        
+        print(f"\n💡 Custom Prompt Tips:")
+        print("   • Be specific about what information to extract")
+        print("   • Mention the desired folder structure")
+        print("   • Include examples of expected folder names")
+        print("   • Use the CLI: file-butler organize-with-prompt /path --prompt \"your prompt\"")
+    
     def _demo_cost_tracking(self):
         """Demonstrate cost tracking and optimization"""
         
@@ -490,8 +577,9 @@ class Week2Demo:
             print("  2. Deep dive into LLM analysis" + (" (requires API key)" if not llm_available else ""))
             print("  3. Explore ML clustering patterns" + (" (requires ML libraries)" if not ml_available else ""))
             print("  4. Advanced duplicate detection")
-            print("  5. Cost tracking analysis" + (" (requires LLM usage)" if self.cost_tracker.total_cost_usd == 0 else ""))
-            print("  6. Run full comprehensive demo")
+            print("  5. Custom prompt examples" + (" (requires API key)" if not llm_available else ""))
+            print("  6. Cost tracking analysis" + (" (requires LLM usage)" if self.cost_tracker.total_cost_usd == 0 else ""))
+            print("  7. Run full comprehensive demo")
             print("  0. Exit")
             
             try:
@@ -515,14 +603,19 @@ class Week2Demo:
                 elif choice == '4':
                     self._demo_advanced_duplicates(test_path)
                 elif choice == '5':
+                    if llm_available:
+                        self._demo_custom_prompts(test_path)
+                    else:
+                        print("❌ LLM features not available. Set OPENAI_API_KEY environment variable.")
+                elif choice == '6':
                     if self.cost_tracker.total_cost_usd > 0:
                         self._demo_cost_tracking()
                     else:
                         print("❌ No cost data available. Run LLM analysis first.")
-                elif choice == '6':
+                elif choice == '7':
                     self.run_comprehensive_demo()
                 else:
-                    print("❌ Invalid choice. Please enter 0-6.")
+                    print("❌ Invalid choice. Please enter 0-7.")
                 
                 if choice != '0':
                     input("\nPress Enter to continue...")
