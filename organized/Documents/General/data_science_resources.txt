@@ -1,0 +1,88 @@
+Data Science Learning Resources
+
+Online Courses:
+1. Coursera - Andrew Ng's Machine Learning Course
+   - Comprehensive introduction to ML
+   - Mathematical foundations
+   - Practical assignments in Octave/MATLAB
+
+2. edX - MIT Introduction to Computer Science
+   - Strong programming fundamentals
+   - Problem-solving approach
+   - Python-based
+
+3. Udacity - Data Scientist Nanodegree
+   - Project-based learning
+   - Industry mentorship
+   - Portfolio development
+
+Books:
+1. "Python for Data Analysis" by Wes McKinney
+   - Pandas library deep dive
+   - Data wrangling techniques
+   - Real-world examples
+
+2. "Hands-On Machine Learning" by Aurélien Géron
+   - Practical ML implementation
+   - Scikit-learn and TensorFlow
+   - End-to-end projects
+
+3. "The Elements of Statistical Learning" by Hastie, Tibshirani, Friedman
+   - Mathematical foundations
+   - Advanced concepts
+   - Reference book
+
+YouTube Channels:
+1. 3Blue1Brown - Mathematical intuition
+2. StatQuest - Statistics explained simply
+3. Two Minute Papers - Latest research summaries
+4. Sentdex - Python tutorials
+
+Websites and Blogs:
+1. Kaggle Learn - Free micro-courses
+2. Towards Data Science (Medium)
+3. Analytics Vidhya
+4. KDnuggets
+5. Distill.pub - Visual explanations
+
+Practice Platforms:
+1. Kaggle - Competitions and datasets
+2. LeetCode - Programming practice
+3. HackerRank - Data science challenges
+4. DataCamp - Interactive exercises
+
+Tools to Learn:
+1. Programming: Python, R, SQL
+2. Visualization: Matplotlib, Seaborn, Plotly, Tableau
+3. ML Libraries: Scikit-learn, TensorFlow, PyTorch
+4. Big Data: Spark, Hadoop
+5. Cloud: AWS, GCP, Azure
+
+Project Ideas:
+1. Stock price prediction
+2. Customer churn analysis
+3. Movie recommendation system
+4. Sentiment analysis of tweets
+5. Image classification
+6. Sales forecasting
+
+Communities:
+1. Reddit: r/MachineLearning, r/datascience
+2. Stack Overflow for technical questions
+3. LinkedIn data science groups
+4. Local meetups and conferences
+
+Study Schedule:
+- Monday: Theory and concepts
+- Tuesday: Coding practice
+- Wednesday: Project work
+- Thursday: Reading research papers
+- Friday: Review and practice problems
+- Weekend: Long-form projects
+
+Goals for 2024:
+- Complete 3 online courses
+- Read 5 data science books
+- Finish 10 Kaggle competitions
+- Build 5 portfolio projects
+- Attend 2 data science conferences

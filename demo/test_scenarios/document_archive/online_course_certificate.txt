@@ -1,0 +1,50 @@
+Certificate of Completion
+
+This certifies that
+
+JOHN SMITH
+
+has successfully completed the course
+
+"Introduction to Machine Learning with Python"
+
+Offered by DataCamp University
+Course Duration: 40 hours
+Completion Date: March 15, 2024
+
+Course Content Covered:
+- Python programming fundamentals
+- NumPy and Pandas for data manipulation
+- Matplotlib and Seaborn for visualization
+- Scikit-learn for machine learning
+- Supervised learning algorithms
+- Unsupervised learning techniques
+- Model evaluation and validation
+- Feature engineering
+- Cross-validation techniques
+- Ensemble methods
+
+Skills Demonstrated:
+✓ Data preprocessing and cleaning
+✓ Exploratory data analysis
+✓ Classification and regression modeling
+✓ Model selection and hyperparameter tuning
+✓ Performance evaluation and interpretation
+✓ Visualization of results
+
+Final Project: Customer Churn Prediction Model
+- Achieved 87% accuracy on test set
+- Used Random Forest and Logistic Regression
+- Implemented feature engineering and selection
+- Created comprehensive analysis report
+
+Grade: A (92/100)
+
+Instructor: Dr. Sarah Johnson, Ph.D.
+Data Science Department
+DataCamp University
+
+Certificate ID: DC-ML-2024-JS-001
+Verification: www.datacamp.edu/verify/DC-ML-2024-JS-001
+
+This certificate demonstrates proficiency in fundamental machine learning concepts and practical implementation skills in Python.

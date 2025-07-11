@@ -1,0 +1,49 @@
+Performance Review Template
+
+Employee Name: [To be filled]
+Review Period: [Quarter/Year]
+Reviewer: [Manager Name]
+Date: [Review Date]
+
+Performance Objectives:
+1. Technical Skills Development
+   - Goal: Complete advanced certification
+   - Status: [In Progress/Completed/Not Started]
+   - Comments: [Manager feedback]
+
+2. Project Leadership
+   - Goal: Lead at least one major project
+   - Status: [In Progress/Completed/Not Started]
+   - Comments: [Manager feedback]
+
+3. Team Collaboration
+   - Goal: Mentor junior team members
+   - Status: [In Progress/Completed/Not Started]
+   - Comments: [Manager feedback]
+
+Strengths:
+- [List key strengths and accomplishments]
+- [Specific examples of excellent work]
+- [Areas where employee excels]
+
+Areas for Improvement:
+- [Constructive feedback on growth areas]
+- [Specific skills to develop]
+- [Suggested training or resources]
+
+Overall Rating:
+[ ] Exceeds Expectations
+[ ] Meets Expectations
+[ ] Needs Improvement
+[ ] Unsatisfactory
+
+Goals for Next Period:
+1. [Specific goal with timeline]
+2. [Specific goal with timeline]
+3. [Specific goal with timeline]
+
+Employee Comments:
+[Space for employee self-assessment and feedback]
+
+Manager Signature: _______________ Date: _______
+Employee Signature: _____________ Date: _______

@@ -1,0 +1,54 @@
+Investment Portfolio Notes - 2024
+
+Current Portfolio Allocation:
+- Stocks: 70% ($35,000)
+- Bonds: 20% ($10,000)
+- Cash/Emergency Fund: 10% ($5,000)
+Total Portfolio Value: $50,000
+
+Individual Holdings:
+Stock Investments (70%):
+- S&P 500 Index Fund (VTI): 40% - $20,000
+- International Developed Markets (VTIAX): 15% - $7,500
+- Emerging Markets (VWO): 5% - $2,500
+- Individual Stocks: 10% - $5,000
+  * Apple (AAPL): $1,500
+  * Microsoft (MSFT): $1,500
+  * Amazon (AMZN): $1,000
+  * Tesla (TSLA): $1,000
+
+Bond Investments (20%):
+- Total Bond Market Index (BND): 15% - $7,500
+- Treasury I Bonds: 5% - $2,500
+
+Performance Review:
+YTD Return: +8.5% (vs S&P 500: +7.2%)
+Best Performer: Apple (+15.3%)
+Worst Performer: Tesla (-8.2%)
+
+Investment Strategy:
+- Dollar-cost averaging monthly: $1,000
+- Rebalance quarterly
+- Focus on low-cost index funds
+- Maintain emergency fund separate from investments
+- Target allocation adjustment as I age
+
+2024 Goals:
+- Increase portfolio to $60,000
+- Add REIT exposure (5% allocation)
+- Research ESG investment options
+- Consider tax-loss harvesting opportunities
+- Review and possibly increase 401(k) contribution
+
+Risk Assessment:
+- Time horizon: 30+ years until retirement
+- Risk tolerance: Moderate to aggressive
+- Current age: 28
+- Income stability: Good
+
+Notes:
+- Continue learning about investing
+- Read "A Random Walk Down Wall Street"
+- Consider meeting with fee-only financial advisor
+- Track expenses with Personal Capital
+- Remember: time in market beats timing the market
